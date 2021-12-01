@@ -1,0 +1,35 @@
+{
+	"root": true,
+	"extends": [
+		"@techmmunity/eslint-config/common",
+		"@techmmunity/eslint-config/jest",
+		"@techmmunity/eslint-config/typescript"
+	],
+	"rules": {
+		"import-helpers/order-imports": [
+			"warn",
+			{
+				"groups": [
+					"module",
+					["parent", "sibling", "index"],
+					"/service$/",
+					"/^./service/",
+					"/consumers/",
+					"/shared/",
+					"/job/",
+					"/helpers/",
+					"/validate/",
+					"/module/",
+					"/controller/",
+					"/\\.entity/",
+					"/utils/",
+					"/enums/",
+					"/config/",
+					"/assets/",
+					"/types/",
+					"/mocks/"
+				]
+			}
+		]
+	}
+}
