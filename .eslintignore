@@ -70,3 +70,6 @@ serverless.js.map
 
 # Temp
 tmp/
+
+#Etc
+/jest.config.js
