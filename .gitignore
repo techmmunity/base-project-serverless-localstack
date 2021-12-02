@@ -67,3 +67,6 @@ serverless.js.map
 
 # NPM
 package-lock.json
+
+# Temp
+tmp/

@@ -7,7 +7,6 @@
 		"rootDir": "src",
 		"lib": ["ES2020", "ES2020.String"],
 		"strict": true,
-		"declaration": true,
 		"removeComments": true,
 		"resolveJsonModule": true,
 		"emitDecoratorMetadata": true,
@@ -16,13 +15,8 @@
 		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true,
 		"sourceMap": true,
-		"incremental": true,
+		"skipLibCheck": true,
 		"baseUrl": "src"
 	},
-	"exclude": [
-		"serverless.ts",
-		"serverless.js",
-		"serverless.js.map",
-		"serverless.d.ts"
-	]
+	"include": ["src", "jest.config.js"]
 }

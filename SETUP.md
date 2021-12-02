@@ -30,7 +30,3 @@
 - [ ] Remove script "temp:test-tsc" from `package.json`
 - [ ] Uncomment steps "Run Tests" and "Collect Coverage" from `.github/workflows/tests.yml`
 - [ ] Uncomment "coverageThreshold" from `jest.config.js`
-
-### After all other steps are completed
-
-- [ ] Delete this file

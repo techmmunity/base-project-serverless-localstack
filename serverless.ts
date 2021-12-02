@@ -1,11 +1,15 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { v1 } from "./src/v1";
+import { exampleDomain } from "./src/api/example-domain";
+
+import { SERVICE_NAME } from "./src/config/index";
+
+import { resources } from "./resources";
 
 import type { AWS } from "@serverless/typescript";
 
 const serverlessConfiguration: AWS = {
-	service: "base-project-serverless",
+	service: SERVICE_NAME,
 	frameworkVersion: "2",
 	useDotenv: true,
 	package: {
@@ -14,11 +18,15 @@ const serverlessConfiguration: AWS = {
 	custom: {
 		webpack: {
 			webpackConfig: "./webpack.config.js",
+			packager: "yarn",
 			includeModules: true,
 		},
-		optimize: ["swagger-ui-dist"]
+		localstack: {
+			host: "http://localstack",
+			stages: ["local"]
+		}
 	},
-	plugins: ["serverless-webpack", "serverless-offline"],
+	plugins: ["serverless-webpack", "serverless-offline", "serverless-localstack"],
 	provider: {
 		name: "aws",
 		runtime: "nodejs14.x",
@@ -28,10 +36,28 @@ const serverlessConfiguration: AWS = {
 		},
 		environment: {
 			AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
+			DYNAMODB_REGION: process.env.DYNAMODB_REGION!,
+			DYNAMODB_ENDPOINT: process.env.DYNAMODB_ENDPOINT!,
+			DYNAMODB_ACCESS_KEY_ID: process.env.DYNAMODB_ACCESS_KEY_ID!,
+			DYNAMODB_SECRET_ACCESS_KEY: process.env.DYNAMODB_SECRET_ACCESS_KEY!,
 		},
 		lambdaHashingVersion: "20201221",
+		iamRoleStatements: [
+			{
+				Effect: "Allow",
+				Action: [
+					"dynamodb:*",
+					"s3:*",
+					"lambda:*",
+				],
+				Resource: "*"
+			}
+		],
 	},
-	functions: { v1 },
+	resources,
+	functions: {
+		...exampleDomain
+	},
 };
 
 module.exports = serverlessConfiguration;

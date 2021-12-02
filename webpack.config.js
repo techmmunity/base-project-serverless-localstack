@@ -14,7 +14,7 @@ module.exports = {
 		? "eval-cheap-module-source-map"
 		: "source-map",
 	resolve: {
-		extensions: [".mjs", ".json", ".ts"],
+		extensions: [".mjs", ".ts", ".js"],
 		symlinks: false,
 		cacheWithContext: false,
 		plugins: [
@@ -32,20 +32,14 @@ module.exports = {
 		concatenateModules: false,
 	},
 	target: "node",
-	externals: [nodeExternals()],
+	externals: [nodeExternals(), "aws-sdk"],
 	module: {
 		rules: [
-			// All files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
+			// All files with a `.ts` extension will be handled by `ts-loader`
 			{
-				test: /\.(tsx?)$/,
+				test: /\.ts$/,
 				loader: "ts-loader",
-				exclude: [
-					[
-						path.resolve(__dirname, "node_modules"),
-						path.resolve(__dirname, ".serverless"),
-						path.resolve(__dirname, ".webpack"),
-					],
-				],
+				exclude: [[/node_modules/, /\.serverless/, /\.webpack/]],
 				options: {
 					transpileOnly: true,
 					experimentalWatchApi: true,

@@ -107,11 +107,13 @@
 
 	// Spell Checker
 	"cSpell.words": [
+		"camelize",
 		"conta",
 		"dotenv",
 		"fastify",
 		"injectables",
 		"jwks",
+		"localstack",
 		"MONGODB",
 		"nestjs",
 		"nodemodules",

@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+  localstack:
+    image: localstack/localstack
+    ports:
+      - "4566-4597:4566-4597"
+    environment:
+      AWS_DEFAULT_REGION: us-east-1
+      EDGE_PORT: 4566
+      SERVICES: dynamodb,lambda,cloudformation,s3,apigateway,iam,route53,sts
+      DATA_DIR: /tmp/localstack/data
+      LAMBDA_EXECUTOR: docker
+      DOCKER_HOST: unix:///var/run/docker.sock
+      LAMBDA_DOCKER_NETWORK: host
+    volumes:
+      - "./tmp:/tmp/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - app_network
+  api:
+    build: "."
+    container_name: app_api
+    command: yarn dev:docker
+    depends_on:
+      - localstack
+    ports:
+      - 3000:3000
+    networks:
+      - app_network
+    environment:
+      DYNAMODB_ENDPOINT: http://localhost:4566
+      DYNAMODB_REGION: us-east-1
+      DYNAMODB_ACCESS_KEY_ID: fake-access-key
+      DYNAMODB_SECRET_ACCESS_KEY: fake-secret-key
+    volumes:
+      - ./:/app/
+      - nodemodules:/app/node_modules
+
+volumes:
+  database-data:
+  nodemodules:
+
+networks:
+  app_network:
+    driver: bridge
