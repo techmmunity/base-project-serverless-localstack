@@ -2,14 +2,8 @@ import { Connection } from "@techmmunity/symbiosis-dynamodb";
 import { camelizeFirst } from "utils/string/camelize-first";
 import { SERVICE_NAME } from "config";
 
-const {
-	NODE_ENV,
-	LOCALSTACK_HOSTNAME,
-	DYNAMODB_REGION,
-	DYNAMODB_ENDPOINT,
-	DYNAMODB_ACCESS_KEY_ID,
-	DYNAMODB_SECRET_KEY_ID,
-} = process.env;
+const { NODE_ENV, LOCALSTACK_HOSTNAME } = process.env;
+
 const isPrd = NODE_ENV === "production";
 
 export const connect = async (entities: Array<any>) => {
@@ -27,19 +21,15 @@ export const connect = async (entities: Array<any>) => {
 		},
 		suffix: {
 			entity: {
-				add: isPrd ? "Production" : "Local",
+				add: isPrd ? "Production" : "Dev",
 				remove: "Entity",
 			},
 		},
 		databaseConfig: {
-			region: DYNAMODB_REGION,
 			endpoint: LOCALSTACK_HOSTNAME
 				? `http://${LOCALSTACK_HOSTNAME}:4566`
-				: DYNAMODB_ENDPOINT,
-			credentials: {
-				accessKeyId: DYNAMODB_ACCESS_KEY_ID,
-				secretAccessKey: DYNAMODB_SECRET_KEY_ID,
-			},
+				: undefined,
+			// Credentials and region are automatically loaded from environment
 		},
 	});
 

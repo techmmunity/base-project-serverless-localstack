@@ -11,24 +11,26 @@ import type { AWS } from "@serverless/typescript";
 const serverlessConfiguration: AWS = {
 	service: SERVICE_NAME,
 	frameworkVersion: "2",
+	variablesResolutionMode: "20210326",
 	useDotenv: true,
 	package: {
 		individually: true,
 	},
 	custom: {
 		localstack: {
-			host: "http://localstack",
-			stages: ["local"]
+			host: "http://localstack:4566",
+			stages: ["dev"]
 		},
 		ncc: {
 			minify: true,
 			excludeDependencies: true,
 		}
 	},
-	plugins: ["serverless-vercel-ncc", "serverless-offline", "serverless-localstack"],
+	plugins: ["serverless-vercel-ncc", "serverless-localstack"],
 	provider: {
 		name: "aws",
 		runtime: "nodejs14.x",
+		lambdaHashingVersion: "20201221",
 		apiGateway: {
 			minimumCompressionSize: 1024,
 			shouldStartNameWithService: true,
@@ -36,13 +38,11 @@ const serverlessConfiguration: AWS = {
 		environment: {
 			AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
 			NODE_PATH: "./:/opt/node_modules",
-			NODE_ENV: process.env.NODE_ENV!,
-			DYNAMODB_REGION: process.env.DYNAMODB_REGION!,
-			DYNAMODB_ENDPOINT: process.env.DYNAMODB_ENDPOINT!,
-			DYNAMODB_ACCESS_KEY_ID: process.env.DYNAMODB_ACCESS_KEY_ID!,
-			DYNAMODB_SECRET_ACCESS_KEY: process.env.DYNAMODB_SECRET_ACCESS_KEY!,
+			NODE_ENV: "${opt:stage, 'dev'}}",
+			AWS_DEFAULT_REGION: "${ssm:${self:service}-region-${opt:stage, 'dev'}}",
+			AWS_ACCESS_KEY_ID: "${ssm:${self:service}-accessKey-${opt:stage, 'dev'}}",
+			AWS_SECRET_ACCESS_KEY: "${ssm:${self:service}-secretKey-${opt:stage, 'dev'}}",
 		},
-		lambdaHashingVersion: "20201221",
 		iamRoleStatements: [
 			{
 				Effect: "Allow",
@@ -50,6 +50,7 @@ const serverlessConfiguration: AWS = {
 					"dynamodb:*",
 					"s3:*",
 					"lambda:*",
+					"ssm:GetParameter",
 				],
 				Resource: "*"
 			}
@@ -58,7 +59,7 @@ const serverlessConfiguration: AWS = {
 	layers: {
 		NodeModules: {
 			path: "layers/modules",
-			name: "${self:service}-node-modules-${opt:stage, 'local'}",
+			name: "${self:service}-node-modules-${opt:stage, 'dev'}",
 			description: "Shared node modules",
 			compatibleRuntimes: ["nodejs14.x"],
 			package: {

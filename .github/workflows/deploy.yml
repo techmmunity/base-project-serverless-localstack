@@ -11,17 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Add SSH Key
-        uses: webfactory/ssh-agent@v0.5.2
-        with:
-          ssh-private-key: ${{ secrets.CORE_REPOSITORY_SSH_KEY }}
-
-      - name: Clone Core Repository
-        run: |
-          git clone git@github.com:techmmunity/core.git
-          mv core/src src/core
-          rm -rf core
-
       - name: Install Dependencies
         run: |
           yarn
@@ -30,16 +19,19 @@ jobs:
         run: |
           yarn test:cov
 
-      - name: Build
-        run: yarn build
-
-      - name: Create .env
-        run: printf "NODE_ENV=production\nMONGODB_URL=${{ secrets.MONGODB_URL }}\nKEY_PLACTRONIC=${{ secrets.KEY_PLACTRONIC }}\nKEY_WILL=${{ secrets.KEY_WILL }}\nKEY_RAZAL=${{ secrets.KEY_RAZAL }}" > .env
+      - name: Create node_modules Layer
+        run: |
+          mkdir -p ./layers/modules
+          cp ./package.json ./layers/modules
+          cp ./yarn.lock ./layers/modules
+          cd ./layers/modules
+          yarn --production
+          cd ../../
 
       - name: Deploy AWS
         uses: serverless/github-action@master
         with:
-          args: deploy
+          args: deploy --stage production
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

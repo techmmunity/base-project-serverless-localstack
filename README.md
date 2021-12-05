@@ -25,3 +25,4 @@
 ## TODO
 
 - [ ] Test Cognito Integration
+- [ ] Improve security of IAM (only give the needed permissions instead of all of they)

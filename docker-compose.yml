@@ -1,8 +1,19 @@
 version: "3.8"
 
 services:
+  docker-events-listener:
+    container_name: base-project-serverless-localstack_docker-events-listener
+    build:
+      context: docker-events-listener-build
+      dockerfile: Dockerfile # The Dockerfile from ./docker-events-listener-build
+    networks:
+      - app_network
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
   localstack:
     image: localstack/localstack
+    container_name: base-project-serverless-localstack_localstack
     ports:
       - "127.0.0.1:53:53" # only required for Pro
       - "127.0.0.1:53:53/udp" # only required for Pro
@@ -11,7 +22,7 @@ services:
       - "4566-4597:4566-4597"
     environment:
       AWS_DEFAULT_REGION: us-east-1
-      SERVICES: dynamodb,lambda,cloudformation,s3,apigateway,iam,route53,sts
+      SERVICES: dynamodb,lambda,cloudformation,s3,apigateway,iam,route53,sts,ssm,secretsmanager
       DATA_DIR: /tmp/localstack/data
       LAMBDA_EXECUTOR: docker
       DOCKER_HOST: unix:///var/run/docker.sock
@@ -24,29 +35,27 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock"
     networks:
       - app_network
+    depends_on:
+      - docker-events-listener
+
   api:
     build: "."
-    command: yarn dev:docker
+    container_name: base-project-serverless-localstack_api
+    command: bash -c "sleep 20; yarn dev:docker"
     depends_on:
       - localstack
     ports:
       - 3000:3000
     networks:
       - app_network
-    environment:
-      NODE_ENV: dev
-      DYNAMODB_ENDPOINT: http://localhost:4566
-      DYNAMODB_REGION: us-east-1
-      DYNAMODB_ACCESS_KEY_ID: fake-access-key
-      DYNAMODB_SECRET_ACCESS_KEY: fake-secret-key
-      # SLS_DEBUG: "*"
+    # environment:
+    # SLS_DEBUG: "*"
     volumes:
       - ./:/app/
       - nodemodules:/app/node_modules
       - layers:/app/layers
 
 volumes:
-  database-data:
   nodemodules:
   layers:
 

@@ -122,6 +122,7 @@
 		"injectables",
 		"jwks",
 		"localstack",
+		"mkdir",
 		"MONGODB",
 		"nestjs",
 		"nodemodules",

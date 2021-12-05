@@ -19,6 +19,7 @@
 
 - [ ] Run `yarn husky:config` to automatically config husky
 - [ ] Change the project name on `package.json`
+- [ ] Change **every** place that `base-project-serverless-localstack` appear
 - [ ] Configure the `serverless.yml` file
 - [ ] Add project to [CodeFactor](https://www.codefactor.io/)
 - [ ] Add project to [DeepScan](https://deepscan.io/dashboard/#view=team&tid=13883)
