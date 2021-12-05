@@ -37,3 +37,22 @@ lerna-debug.log*
 # GraphQL
 schema.gql
 
+# Extras
+.github/
+.husky/
+.serverless/
+.vscode/
+coverage/
+.dockerignore
+.editorconfig
+.eslintignore
+.eslintrc.json
+.gitingore
+.nvmrc
+docker-compose.yml
+Dockerfile
+FAQ.md
+jest.config.js
+LICENSE
+README.md
+SETUP.md

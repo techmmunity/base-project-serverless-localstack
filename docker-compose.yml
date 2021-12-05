@@ -4,15 +4,21 @@ services:
   localstack:
     image: localstack/localstack
     ports:
+      - "127.0.0.1:53:53" # only required for Pro
+      - "127.0.0.1:53:53/udp" # only required for Pro
+      - "127.0.0.1:443:443" # only required for Pro
+      - "127.0.0.1:4510-4530:4510-4530" # only required for Pro
       - "4566-4597:4566-4597"
     environment:
       AWS_DEFAULT_REGION: us-east-1
-      EDGE_PORT: 4566
       SERVICES: dynamodb,lambda,cloudformation,s3,apigateway,iam,route53,sts
       DATA_DIR: /tmp/localstack/data
       LAMBDA_EXECUTOR: docker
       DOCKER_HOST: unix:///var/run/docker.sock
       LAMBDA_DOCKER_NETWORK: host
+      EDGE_PORT: 4566
+    env_file:
+      - .env.docker
     volumes:
       - "./tmp:/tmp/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
@@ -20,7 +26,6 @@ services:
       - app_network
   api:
     build: "."
-    container_name: app_api
     command: yarn dev:docker
     depends_on:
       - localstack
@@ -29,17 +34,21 @@ services:
     networks:
       - app_network
     environment:
+      NODE_ENV: dev
       DYNAMODB_ENDPOINT: http://localhost:4566
       DYNAMODB_REGION: us-east-1
       DYNAMODB_ACCESS_KEY_ID: fake-access-key
       DYNAMODB_SECRET_ACCESS_KEY: fake-secret-key
+      # SLS_DEBUG: "*"
     volumes:
       - ./:/app/
       - nodemodules:/app/node_modules
+      - layers:/app/layers
 
 volumes:
   database-data:
   nodemodules:
+  layers:
 
 networks:
   app_network:

@@ -9,7 +9,7 @@ export const resources: AWS["resources"] = {
 			DeletionPolicy: "Retain",
 			Properties: {
 				TableName:
-					"${self:service}-authoring-activities-${opt:stage, 'local'}",
+					"${self:service}-example-${opt:stage, 'local'}",
 				AttributeDefinitions: [
 					{
 						AttributeName: "id",

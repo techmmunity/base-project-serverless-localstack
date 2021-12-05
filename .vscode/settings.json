@@ -105,6 +105,14 @@
 	"todo-tree.general.tags": ["BUG", "HACK", "FIXME", "TODO", "[ ]"],
 	"todo-tree.tree.showScanModeButton": false,
 
+	// VSCode Watcher
+	"files.watcherExclude": {
+		"**/tmp/**": true,
+		"**/node_modules/**": true,
+		"**/dist/**": true,
+		"**/coverage/**": true
+	},
+
 	// Spell Checker
 	"cSpell.words": [
 		"camelize",
@@ -118,6 +126,7 @@
 		"nestjs",
 		"nodemodules",
 		"prebuild",
+		"Runtimes",
 		"sonarjs",
 		"techmmunity",
 		"tsbuildinfo",

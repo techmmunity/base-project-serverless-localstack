@@ -47,7 +47,7 @@ export const makeController =
 				headers: DEFAULT_HEADERS,
 				statusCode: err.statusCode || StatusCodeEnum.INTERNAL,
 				body: JSON.stringify({
-					error: err.message,
+					error: JSON.stringify(err),
 				}),
 			};
 		}

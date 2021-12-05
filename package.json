@@ -6,8 +6,8 @@
 	"private": false,
 	"license": "Apache-2.0",
 	"dependencies": {
-		"@techmmunity/symbiosis": "^0.0.28",
-		"@techmmunity/symbiosis-dynamodb": "^0.0.16",
+		"@techmmunity/symbiosis": "^0.0.29",
+		"@techmmunity/symbiosis-dynamodb": "^0.0.17",
 		"reflect-metadata": "^0.1.13",
 		"uuid": "^8.3.2"
 	},
@@ -29,18 +29,14 @@
 		"serverless": "^2.67.0",
 		"serverless-localstack": "^0.4.35",
 		"serverless-offline": "^8.3.1",
-		"serverless-webpack": "^5.6.0",
+		"serverless-vercel-ncc": "^0.0.6",
 		"supertest": "^6.1.3",
 		"ts-jest": "^27.0.3",
 		"ts-loader": "^9.2.3",
-		"tsconfig-paths": "^3.12.0",
-		"tsconfig-paths-webpack-plugin": "^3.5.2",
-		"typescript": "^4.5.2",
-		"webpack": "^5.64.4",
-		"webpack-node-externals": "^3.0.0"
+		"ts-node": "^10.4.0",
+		"typescript": "^4.5.2"
 	},
 	"scripts": {
-		"prebuild": "yarn clear",
 		"prepare": "husky install",
 		"build": "serverless package",
 		"start": "node dist/index.js",
@@ -48,6 +44,7 @@
 		"lint": "eslint . --quiet",
 		"dev": "serverless offline",
 		"dev:docker": "serverless deploy --stage local",
+		"docker": "docker-compose up --build",
 		"test": "jest --passWithNoTests",
 		"test:cov": "jest --coverage --passWithNoTests",
 		"upgrade-dependencies": "yarn upgrade-interactive --latest",

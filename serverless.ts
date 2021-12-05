@@ -16,17 +16,16 @@ const serverlessConfiguration: AWS = {
 		individually: true,
 	},
 	custom: {
-		webpack: {
-			webpackConfig: "./webpack.config.js",
-			packager: "yarn",
-			includeModules: true,
-		},
 		localstack: {
 			host: "http://localstack",
 			stages: ["local"]
+		},
+		ncc: {
+			minify: true,
+			excludeDependencies: true,
 		}
 	},
-	plugins: ["serverless-webpack", "serverless-offline", "serverless-localstack"],
+	plugins: ["serverless-vercel-ncc", "serverless-offline", "serverless-localstack"],
 	provider: {
 		name: "aws",
 		runtime: "nodejs14.x",
@@ -36,6 +35,8 @@ const serverlessConfiguration: AWS = {
 		},
 		environment: {
 			AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
+			NODE_PATH: "./:/opt/node_modules",
+			NODE_ENV: process.env.NODE_ENV!,
 			DYNAMODB_REGION: process.env.DYNAMODB_REGION!,
 			DYNAMODB_ENDPOINT: process.env.DYNAMODB_ENDPOINT!,
 			DYNAMODB_ACCESS_KEY_ID: process.env.DYNAMODB_ACCESS_KEY_ID!,
@@ -54,10 +55,21 @@ const serverlessConfiguration: AWS = {
 			}
 		],
 	},
+	layers: {
+		NodeModules: {
+			path: "layers/modules",
+			name: "${self:service}-node-modules-${opt:stage, 'local'}",
+			description: "Shared node modules",
+			compatibleRuntimes: ["nodejs14.x"],
+			package: {
+				include: ["node_modules/**"]
+			}
+		}
+	},
 	resources,
 	functions: {
 		...exampleDomain
-	},
+	} as any,
 };
 
-module.exports = serverlessConfiguration;
+export = serverlessConfiguration;

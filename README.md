@@ -1,13 +1,27 @@
-# Techmmunity - Base Project Serverless
+<div align="center">
 
-[![CodeFactor](https://www.codefactor.io/repository/github/techmmunity/base-project-serverless/badge)](https://www.codefactor.io/repository/github/techmmunity/base-project-serverless)
-[![DeepScan grade](https://deepscan.io/api/teams/13883/projects/17602/branches/407704/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=13883&pid=17602&bid=407704)
-[![Coverage Status](https://coveralls.io/repos/github/techmmunity/base-project-serverless/badge.svg?branch=master)](https://coveralls.io/github/techmmunity/base-project-serverless?branch=master)
-[![tests](https://github.com/techmmunity/base-project-serverless/actions/workflows/tests.yml/badge.svg)](https://github.com/techmmunity/base-project-serverless/actions/workflows/tests.yml)
+<img src="https://github.com/techmmunity/eslint-config/raw/master/resources/logo.gif" width="300" height="300">
+
+# Techmmunity - Base Project Serverless LocalStack
+
+<a href="https://github.com/techmmunity/eslint-config">
+	<img src="https://img.shields.io/badge/style%20guide-Techmmunity-01d2ce?style=for-the-badge" alt="Style Guide: Techmmunity">
+</a>
+<a href="https://www.codefactor.io/repository/github/techmmunit/base-project-serverless-localstack">
+	<img src="https://www.codefactor.io/repository/github/techmmunit/base-project-serverless-localstack/badge?style=for-the-badge" alt="CodeFactor">
+</a>
+<a href="https://coveralls.io/github/techmmunit/base-project-serverless-localstack?branch=master">
+	<img src="https://img.shields.io/coveralls/github/techmmunit/base-project-serverless-localstack/master?style=for-the-badge" alt="Coveralls">
+</a>
+<a href="https://github.com/techmmunit/base-project-serverless-localstack/actions/workflows/coverage.yml">
+	<img src="https://img.shields.io/github/workflow/status/techmmunit/base-project-serverless-localstack/Collect%20Coverage?label=tests&logo=github&style=for-the-badge" alt="Tests">
+</a>
+
+<br>
+<br>
+
+</div>
 
 ## TODO
 
-- [ ] Add Dynamo Integration
-- [ ] Config Serverless Framework correctly
 - [ ] Test Cognito Integration
-- [ ] Add Unit Tests
