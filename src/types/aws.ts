@@ -33,9 +33,115 @@ import type {
 	AwsHttpApiPayload,
 } from "@serverless/typescript";
 
+export interface HttpEvent {
+	http: {
+		async?: boolean;
+		authorizer?:
+			| string
+			| {
+					arn?: AwsArn;
+					authorizerId?: AwsCfInstruction;
+					claims?: Array<string>;
+					identitySource?: string;
+					identityValidationExpression?: string;
+					managedExternally?: boolean;
+					name?: string;
+					resultTtlInSeconds?: number;
+					scopes?: Array<string>;
+					type?: string | string | string | string;
+			  };
+		connectionId?: AwsCfInstruction;
+		connectionType?: string | string;
+		cors?:
+			| boolean
+			| {
+					allowCredentials?: boolean;
+					cacheControl?: string;
+					headers?: Array<string>;
+					maxAge?: number;
+					methods?: Array<
+						| "ANY"
+						| "DELETE"
+						| "GET"
+						| "HEAD"
+						| "OPTIONS"
+						| "PATCH"
+						| "POST"
+						| "PUT"
+					>;
+					origin?: string;
+					origins?: Array<string>;
+			  };
+		integration?:
+			| string
+			| string
+			| string
+			| string
+			| string
+			| string
+			| string
+			| string
+			| string
+			| string;
+		method: string;
+		operationId?: string;
+		path: string;
+		private?: boolean;
+		request?: {
+			contentHandling?: "CONVERT_TO_BINARY" | "CONVERT_TO_TEXT";
+			method?: string;
+			parameters?: {
+				querystrings?: Record<
+					string,
+					| boolean
+					| {
+							required?: boolean;
+							mappedValue?: AwsCfInstruction;
+					  }
+				>;
+				headers?: Record<
+					string,
+					| boolean
+					| {
+							required?: boolean;
+							mappedValue?: AwsCfInstruction;
+					  }
+				>;
+				paths?: Record<
+					string,
+					| boolean
+					| {
+							required?: boolean;
+							mappedValue?: AwsCfInstruction;
+					  }
+				>;
+			};
+			passThrough?: "NEVER" | "WHEN_NO_MATCH" | "WHEN_NO_TEMPLATES";
+			schema?: Record<string, Record<string, unknown> | string>;
+			schemas?: Record<string, Record<string, unknown> | string>;
+			template?: Record<string, string>;
+			uri?: AwsCfInstruction;
+		};
+		response?: {
+			contentHandling?: "CONVERT_TO_BINARY" | "CONVERT_TO_TEXT";
+			headers?: Record<string, string>;
+			template?: string;
+			statusCodes?: Record<
+				string,
+				{
+					headers?: Record<string, string>;
+					pattern?: string;
+					template?: Record<string, string> | string;
+				}
+			>;
+		};
+	};
+}
+
 export interface Lambda {
 	name?: string;
 	events?: Array<
+		| HttpEvent
 		| {
 				__schemaWorkaround__: null;
 		  }
@@ -192,112 +298,6 @@ export interface Lambda {
 		  }
 		| {
 				eventBridge: Record<string, unknown> | Record<string, unknown>;
-		  }
-		| {
-				http:
-					| string
-					| {
-							async?: boolean;
-							authorizer?:
-								| string
-								| {
-										arn?: AwsArn;
-										authorizerId?: AwsCfInstruction;
-										claims?: Array<string>;
-										identitySource?: string;
-										identityValidationExpression?: string;
-										managedExternally?: boolean;
-										name?: string;
-										resultTtlInSeconds?: number;
-										scopes?: Array<string>;
-										type?: string | string | string | string;
-								  };
-							connectionId?: AwsCfInstruction;
-							connectionType?: string | string;
-							cors?:
-								| boolean
-								| {
-										allowCredentials?: boolean;
-										cacheControl?: string;
-										headers?: Array<string>;
-										maxAge?: number;
-										methods?: Array<
-											| "ANY"
-											| "DELETE"
-											| "GET"
-											| "HEAD"
-											| "OPTIONS"
-											| "PATCH"
-											| "POST"
-											| "PUT"
-										>;
-										origin?: string;
-										origins?: Array<string>;
-								  };
-							integration?:
-								| string
-								| string
-								| string
-								| string
-								| string
-								| string
-								| string
-								| string
-								| string
-								| string;
-							method: string;
-							operationId?: string;
-							path: string;
-							private?: boolean;
-							request?: {
-								contentHandling?: "CONVERT_TO_BINARY" | "CONVERT_TO_TEXT";
-								method?: string;
-								parameters?: {
-									querystrings?: Record<
-										string,
-										| boolean
-										| {
-												required?: boolean;
-												mappedValue?: AwsCfInstruction;
-										  }
-									>;
-									headers?: Record<
-										string,
-										| boolean
-										| {
-												required?: boolean;
-												mappedValue?: AwsCfInstruction;
-										  }
-									>;
-									paths?: Record<
-										string,
-										| boolean
-										| {
-												required?: boolean;
-												mappedValue?: AwsCfInstruction;
-										  }
-									>;
-								};
-								passThrough?: "NEVER" | "WHEN_NO_MATCH" | "WHEN_NO_TEMPLATES";
-								schema?: Record<string, Record<string, unknown> | string>;
-								schemas?: Record<string, Record<string, unknown> | string>;
-								template?: Record<string, string>;
-								uri?: AwsCfInstruction;
-							};
-							response?: {
-								contentHandling?: "CONVERT_TO_BINARY" | "CONVERT_TO_TEXT";
-								headers?: Record<string, string>;
-								template?: string;
-								statusCodes?: Record<
-									string,
-									{
-										headers?: Record<string, string>;
-										pattern?: string;
-										template?: Record<string, string> | string;
-									}
-								>;
-							};
-					  };
 		  }
 		| {
 				httpApi:

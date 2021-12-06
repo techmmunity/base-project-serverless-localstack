@@ -61,9 +61,6 @@ tsconfig*
 schema.gql
 
 # Serverless
-/serverless.ts
-/resources.ts
-/webpack.config.js
 serverless.d.ts
 serverless.js
 serverless.js.map

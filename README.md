@@ -22,6 +22,22 @@
 
 </div>
 
+## Features
+
+- LocalStack for local tests
+  - LocalStack Dashboard working
+- LambdaLayers, to decrease the packages size
+- Cognito integration
+- DynamoDB integration
+
+# Clean all cache
+
+```sh
+sudo rm -rf .serverless/ tmp/ layers/
+docker system prune
+docker volume prune
+```
+
 ## TODO
 
 - [ ] Test Cognito Integration

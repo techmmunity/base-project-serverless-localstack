@@ -8,15 +8,14 @@ services:
       - "127.0.0.1:53:53/udp" # only required for Pro
       - "127.0.0.1:443:443" # only required for Pro
       - "127.0.0.1:4510-4530:4510-4530" # only required for Pro
-      - "4566-4597:4566-4597"
+      - "127.0.0.1:4566-4597:4566-4597"
     environment:
       AWS_DEFAULT_REGION: us-east-1
-      SERVICES: dynamodb,lambda,cloudformation,s3,apigateway,iam,route53,sts
+      SERVICES: dynamodb,lambda,cloudformation,s3,apigateway,iam,route53,sts,cognito,es
       DATA_DIR: /tmp/localstack/data
       LAMBDA_EXECUTOR: docker
       DOCKER_HOST: unix:///var/run/docker.sock
       LAMBDA_DOCKER_NETWORK: host
-      EDGE_PORT: 4566
     env_file:
       - .env.docker
     volumes:

@@ -6,11 +6,6 @@ import { connect } from "../config/dynamodb";
 
 import { Route, RouteOutput } from "../types/route";
 
-const DEFAULT_HEADERS = {
-	// eslint-disable-next-line @typescript-eslint/naming-convention
-	"Access-Control-Allow-Origin": "*",
-};
-
 export const makeController =
 	(entities: Array<any>, func: Route) =>
 	async (
@@ -31,20 +26,13 @@ export const makeController =
 
 			await connection.close();
 
-			return {
-				...result,
-				headers: {
-					...DEFAULT_HEADERS,
-					...(result.headers || {}),
-				},
-			};
+			return result;
 		} catch (err: any) {
 			if (connection.close) {
 				await connection.close();
 			}
 
 			return {
-				headers: DEFAULT_HEADERS,
 				statusCode: err.statusCode || StatusCodeEnum.INTERNAL,
 				body: JSON.stringify({
 					error: JSON.stringify(err),

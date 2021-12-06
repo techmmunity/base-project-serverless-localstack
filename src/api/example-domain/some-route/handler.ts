@@ -1,6 +1,10 @@
+/**
+ * This file cannot use absolute paths!
+ */
 import { getHandlerPath } from "../../../helpers/get-handler-path";
+import { makeHandler } from "../../../helpers/make-handler";
 
-export const someRoute = {
+export const someRoute = makeHandler({
 	handler: `${getHandlerPath(__dirname)}/controller.controller`,
 	events: [
 		{
@@ -11,4 +15,4 @@ export const someRoute = {
 			},
 		},
 	],
-};
+});

@@ -4,7 +4,6 @@ declare global {
 	namespace NodeJS {
 		interface ProcessEnv {
 			NODE_ENV: "dev" | "homolog" | "production" | "test";
-			DYNAMODB_ENDPOINT?: string;
 			LOCALSTACK_HOSTNAME?: string;
 			DYNAMODB_REGION: string;
 			DYNAMODB_ACCESS_KEY_ID: string;

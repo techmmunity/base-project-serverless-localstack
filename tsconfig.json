@@ -4,7 +4,7 @@
 		"module": "commonjs",
 		"moduleResolution": "node",
 		"outDir": "dist",
-		"rootDir": "src",
+		"rootDir": ".",
 		"lib": ["ES2020", "ES2020.String"],
 		"strict": true,
 		"removeComments": true,
@@ -16,7 +16,7 @@
 		"esModuleInterop": true,
 		"sourceMap": true,
 		"skipLibCheck": true,
-		"baseUrl": "src"
+		"baseUrl": "./src"
 	},
-	"include": ["src", "jest.config.js"]
+	"include": ["src", "jest.config.js", "serverless.ts", "resources.ts"]
 }
