@@ -18,6 +18,9 @@ const serverlessConfiguration: AWS = {
 		individually: true,
 	},
 	custom: {
+		arns: {
+			cognito: "CognitoUserPool:Arn",
+		},
 		localstack: {
 			host: "http://localstack",
 			stages: ["local"],

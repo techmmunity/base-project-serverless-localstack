@@ -18,5 +18,11 @@
 		"skipLibCheck": true,
 		"baseUrl": "./src"
 	},
-	"include": ["src", "jest.config.js", "serverless.ts", "resources.ts"]
+	"include": [
+		"src",
+		"jest.config.js",
+		"serverless.ts",
+		"resources.ts",
+		"globals/*.ts"
+	]
 }

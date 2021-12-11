@@ -42,7 +42,7 @@
 		"format": "eslint . --fix --quiet",
 		"lint": "eslint . --quiet",
 		"dev": "serverless offline",
-		"dev:docker": "serverless deploy --stage local",
+		"dev:docker": "serverless deploy --stage local -v",
 		"docker": "docker-compose up --build --remove-orphans",
 		"test": "jest --passWithNoTests",
 		"test:cov": "jest --coverage --passWithNoTests",

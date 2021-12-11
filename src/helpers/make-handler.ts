@@ -17,7 +17,13 @@ export const makeHandler = (handler: Lambda, config?: Config): Lambda => {
 
 			// Set only-authenticated route
 			if (config?.authorized) {
-				httpEvent.http.authorizer = "aws_iam";
+				httpEvent.http.authorizer = {
+					name: "${self:service}-authorizer",
+					arn: {
+						// eslint-disable-next-line @typescript-eslint/naming-convention
+						"Fn::ImportValue": "${self:custom.arns.cognito}",
+					},
+				};
 			}
 		}
 	});
